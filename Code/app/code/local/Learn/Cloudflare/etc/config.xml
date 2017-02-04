@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Learn_Cloudflare>
+            <version>1.0.0</version>
+        </Learn_Cloudflare>
+    </modules>
+	
+	<!-- Global Section -->
+    <global>
+		<blocks>
+			<cloudflare>
+				<class>Learn_Cloudflare_Block</class>
+			</cloudflare>
+		</blocks>
+
+        <models>
+            <cloudflare>
+                <class>Learn_Cloudflare_Model</class>
+            </cloudflare>
+        </models>
+		
+		<helpers>
+            <cloudflare>
+                <class>Learn_Cloudflare_Helper</class>
+            </cloudflare>
+        </helpers>
+		
+		<!-- Initialization of Event Observer -->
+		<events>
+			<admin_system_config_changed_section_cloudflare_settings>
+				<observers>
+					<cloudflare>
+						<type>singleton</type>
+						<class>cloudflare/observer</class>
+						<method>cloudflare_api</method>
+					</cloudflare>
+				</observers>
+			</admin_system_config_changed_section_cloudflare_settings>
+		</events>
+    </global>
+	
+	<!-- Default Section -->
+    <default>
+        <cloudflare_settings translate="label">
+            <settings>
+                <enable_cloudflare>0</enable_cloudflare>
+            </settings>
+        </cloudflare_settings>
+    </default>
+	
+	<!-- Admin Section -->
+	<admin>
+        <routers>
+            <control>
+				<use>admin</use>
+                <args>
+                    <module>Learn_Cloudflare</module>
+                    <frontName>cloudflare</frontName>
+                </args>
+            </control>
+        </routers>
+    </admin>
+	
+	<adminhtml>
+		<acl>
+			<resources>
+				 <all>
+                    <title>Allow Everything</title>
+                </all>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<cloudflare_settings translate="title" module="cloudflare">
+                                            <title>Cloudflare Settings</title>
+											<sort_order>150</sort_order>
+                                        </cloudflare_settings>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+</config>
